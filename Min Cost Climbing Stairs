@@ -1,0 +1,47 @@
+"""
+You are given an integer array cost where cost[i] is the cost of ith step on a staircase. Once you pay the cost, you can either climb one or two steps.
+
+You can either start from the step with index 0, or the step with index 1.
+
+Return the minimum cost to reach the top of the floor.
+"""
+
+
+def minCostClimbingStairs(self, cost: List[int]) -> int:
+        
+        #pay the cost on step
+        #choose to advance 1 or two steps
+        
+        target=len(cost)
+        
+        def recursion(target,memo={}):
+            if target in memo:
+                return memo[target]
+                
+            #base case
+            if target==1:
+                return 0
+                
+            if target==0:
+                return 0
+            
+            if target<0:
+                return 0
+            
+            #recurrence relation
+            
+           #find cheaper neighbor to come from
+            #use cost to leave that neighbor
+            child1=recursion(target-1) +cost[target-1]
+            child2=recursion(target-2)+cost[target-2]
+            if child1<=child2:
+                result= child1
+            else:
+                result=child2 
+                
+            memo [target]= result
+            return memo[target]
+        
+        
+        return recursion(target)
+    
