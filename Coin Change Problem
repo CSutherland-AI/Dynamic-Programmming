@@ -1,0 +1,37 @@
+def coinChange(self, coins: List[int], amount: int) -> int:
+        
+        
+        #Find the fewest coins needed to get to 11
+        #ans=fewest coins needed to get to children+1
+        
+        def dfs(coins,amount,memo={}):
+            result=amount+1
+            #base case
+            if amount in memo:
+                return memo[amount]
+
+            if amount==0:
+                memo[amount]=0
+                return 0
+            if amount<0:
+                memo[amount]=-1
+                return -1
+
+            #How can answer be made from recurrence relation?
+
+            for coin in coins:
+                numcoins=dfs(coins,amount-coin,memo)                
+                if numcoins!=-1 and numcoins+1<=result:
+                    result=numcoins+1 
+
+            
+            if result< amount+1:
+                memo[amount]=result
+                return memo[amount]   
+
+            #No valid path returned above
+            memo[amount]=-1
+            return -1
+        
+
+        return dfs(coins, amount)
