@@ -1,0 +1,29 @@
+"""
+You are a professional robber planning to rob houses along a street. Each house has a certain amount of money stashed. All houses at this place are arranged in a circle. That means the first house is the neighbor of the last one. Meanwhile, adjacent houses have a security system connected, and it will automatically contact the police if two adjacent houses were broken into on the same night.
+
+Given an integer array nums representing the amount of money of each house, return the maximum amount of money you can rob tonight without alerting the police.
+
+"""
+def rob(self, nums: List[int]) -> int:       
+        
+        def robber(array):
+            
+            if len(array)==0:
+                return 0            
+            if len(array)==1:
+                return array[0]
+            
+            tab=[]
+        
+            tab.append(array[0])
+            tab.append(max(array[0],array[1]))            
+            
+            i=2
+            while i<len(array):
+                tab.append(max(array[i]+tab[i-2], tab[i-1]))               
+                i+=1        
+            return max(tab)        
+       
+        if len(nums)==1:
+            return nums[0]
+        return max(robber(nums[1:]),robber(nums[:-1]))
